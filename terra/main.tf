@@ -122,7 +122,16 @@ resource "azurerm_subnet_network_security_group_association" "task1_db_nsg_assoc
   subnet_id                 = azurerm_subnet.task1_db_subnet.id
   network_security_group_id = azurerm_network_security_group.task1_db_nsg.id
 }
-
+# Bastion NSG
+resource "azurerm_network_security_group" "task1_bastion_nsg" {
+  name                = "task1-bastion-nsg"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.task1_rg.name
+}
+resource "azurerm_subnet_network_security_group_association" "task1_bastion_nsg_association" {
+  subnet_id                 = azurerm_subnet.task1_bastion_subnet.id
+  network_security_group_id = azurerm_network_security_group.task1_bastion_nsg.id
+}
 
 #publicip
 resource "azurerm_public_ip" "task1_web_public_ip" {
